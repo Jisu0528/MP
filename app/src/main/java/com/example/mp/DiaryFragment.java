@@ -33,6 +33,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 public class DiaryFragment extends Fragment {
     private static final int REQUEST_CODE_PICK_IMAGE = 1;
     private String imagePath;
@@ -42,6 +45,9 @@ public class DiaryFragment extends Fragment {
     private EditText et_content;
     private Button btn_save;
     private TextView tv_date;
+    private TextView tv_sky;
+    private TextView tv_temperate;
+    private TextView tv_rain;
 
     public interface OnSaveClickListener {
         void onSaveClick();
@@ -70,6 +76,9 @@ public class DiaryFragment extends Fragment {
         et_content = view.findViewById(R.id.et_content);
         btn_save = view.findViewById(R.id.btn_save);
         tv_date = view.findViewById(R.id.tv_date);
+        tv_rain = view.findViewById(R.id.tv_rain);
+        tv_sky = view.findViewById(R.id.tv_sky);
+        tv_temperate = view.findViewById(R.id.tv_temperate);
 
         // 이미지 선택
         btn_album.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +100,8 @@ public class DiaryFragment extends Fragment {
 
         String selectedDate = getArguments().getString("selectedDate");
         tv_date.setText(formatDate(selectedDate) + " OOTD");
+
+        setWeather("55", "127", selectedDate);
 
 
         return view;
@@ -174,16 +185,6 @@ public class DiaryFragment extends Fragment {
 
         et_content.setText("");
         iv_preview.setImageDrawable(null);
-
-//        Diary newDiary = new Diary();
-//        newDiary.setDate();
-//        newDiary.setContent();
-//        newDiary.setRainType();
-//        newDiary.setSky();
-//        newDiary.setTemperature();
-//
-//        long insertedId = diaryDAO.insertEntry(newDiary);
-//        List<Diary> allDiaries = diaryDAO.getAllEntries();
     }
 
     private String formatDate(String inputDate) {
@@ -199,4 +200,83 @@ public class DiaryFragment extends Fragment {
         }
     }
 
+    private void setWeather(String nx, String ny, String selectedDate) {
+        String timeH = "14";
+        String timeM = "00";
+
+        Call<Weather> call = ApiObject.retrofitService.GetWeather(60, 1, "JSON", selectedDate, getBaseTime(timeH, timeM), nx, ny);
+
+        // 비동기적 실행
+        call.enqueue(new retrofit2.Callback<Weather>() {
+            @Override
+            public void onResponse(Call<Weather> call, Response<Weather> response) {
+                if (response.isSuccessful()) {
+                    List<ITEM> itemList = response.body().response.body.items.item;
+                    WeatherModel weatherModel = new WeatherModel();
+
+                    for (int i = 0; i < itemList.size(); i++) {
+                        switch (itemList.get(i).category) {
+                            case "PTY":
+                                weatherModel.setRainType(itemList.get(i).fcstValue);
+                                break;
+                            case "SKY":
+                                weatherModel.setSky(itemList.get(i).fcstValue);
+                                break;
+                            case "T1H":
+                                weatherModel.setTemp(itemList.get(i).fcstValue);
+                                break;
+                            default:
+                                continue;
+                        }
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_temperate.setText(weatherModel.getTemp()+ "°C");
+                            tv_rain.setText(getRainType(weatherModel.getRainType()));
+                            tv_sky.setText(getSky(weatherModel.getSky()));
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Weather> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private String getBaseTime(String timeH, String timeM) {
+        return timeH + timeM;
+    }
+
+    private static String getRainType(String rainType) {
+        switch (rainType) {
+            case "0":
+                return "없음";
+            case "1":
+                return "비";
+            case "2":
+                return "비/눈";
+            case "3":
+                return "눈";
+            default:
+                return "오류: 강수 : " + rainType;
+        }
+    }
+
+    private static String getSky(String sky) {
+        switch (sky) {
+            case "1":
+                return "맑음";
+            case "3":
+                return "구름 많음";
+            case "4":
+                return "흐림";
+            default:
+                return "오류: 날씨 : " + sky;
+        }
+    }
 }
