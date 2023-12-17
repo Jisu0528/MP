@@ -2,6 +2,8 @@ package com.example.mp;
 
 import static android.app.Activity.RESULT_OK;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -253,6 +256,7 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
                 t.printStackTrace();
+                Log.d(TAG, "error");
             }
         });
     }

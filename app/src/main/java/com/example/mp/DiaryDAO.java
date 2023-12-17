@@ -31,7 +31,7 @@ public class DiaryDAO {
         values.put("content", diary.getContent());
         values.put("picture", diary.getPicture());
         values.put("temperature", diary.getTemperature());
-        values.put("raintType", diary.getRainType());
+        values.put("rainType", diary.getRainType());
         values.put("sky", diary.getSky());
 
         return database.insert("entries", null, values);
