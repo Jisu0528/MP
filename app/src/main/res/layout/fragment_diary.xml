@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mm/dd의 OOTD"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내용"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="글 내용을 입력하세요~"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이미지"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"/>
+
+        <View
+            android:layout_width="246dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btn_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/solid_blue"
+            android:text="이미지 선택"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_preview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="기온"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/tv_temperate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:textSize="20dp"
+                android:paddingLeft="50dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="날씨"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/tv_sky"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:textSize="20dp"
+                android:paddingLeft="50dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="강수"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/tv_rain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:textSize="20dp"
+                android:paddingLeft="50dp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_blue"
+        android:text="저장"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
