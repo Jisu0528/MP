@@ -34,30 +34,30 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvTime;
-        private final TextView tvRainType;
-        private final TextView tvHumidity;
-        private final TextView tvSky;
-        private final TextView tvTemp;
-        private final TextView tvRecommends;
+        private final TextView tv_time;
+        private final TextView tv_rainType;
+        private final TextView tv_humidity;
+        private final TextView tv_sky;
+        private final TextView tv_temp;
+        private final TextView tv_recommends;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTime = itemView.findViewById(R.id.tv_time);
-            tvRainType = itemView.findViewById(R.id.tv_rainType);
-            tvHumidity = itemView.findViewById(R.id.tv_humidity);
-            tvSky = itemView.findViewById(R.id.tv_sky);
-            tvTemp = itemView.findViewById(R.id.tv_temp);
-            tvRecommends = itemView.findViewById(R.id.tv_recommends);
+            tv_time = itemView.findViewById(R.id.tv_time);
+            tv_rainType = itemView.findViewById(R.id.tv_rainType);
+            tv_humidity = itemView.findViewById(R.id.tv_humidity);
+            tv_sky = itemView.findViewById(R.id.tv_sky);
+            tv_temp = itemView.findViewById(R.id.tv_temp);
+            tv_recommends = itemView.findViewById(R.id.tv_recommends);
         }
 
         public void setItem(WeatherModel item) {
-            tvTime.setText(item.getFcstTime());
-            tvRainType.setText(getRainType(item.getRainType()));
-            tvHumidity.setText(item.getHumidity());
-            tvSky.setText(getSky(item.getSky()));
-            tvTemp.setText(item.getTemp() + "°");
-            tvRecommends.setText(getRecommends(Integer.parseInt(item.getTemp())));
+            tv_time.setText(item.getFcstTime());
+            tv_rainType.setText(getRainType(item.getRainType()));
+            tv_humidity.setText(item.getHumidity());
+            tv_sky.setText(getSky(item.getSky()));
+            tv_temp.setText(item.getTemp() + "°");
+            tv_recommends.setText(getRecommends(Integer.parseInt(item.getTemp())));
         }
     }
 
@@ -72,7 +72,7 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
             case "3":
                 return "눈";
             default:
-                return "오류 rainType : " + rainType;
+                return "오류: 강수 : " + rainType;
         }
     }
 
@@ -85,7 +85,7 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
             case "4":
                 return "흐림";
             default:
-                return "오류 rainType : " + sky;
+                return "오류: 날씨 : " + sky;
         }
     }
 
@@ -102,7 +102,7 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
             return "블라우스, 긴팔티, \n슬랙스, 얇은가디건";
         } else if (temp >= 23 && temp <= 27) {
             return "얇은 셔츠, 반바지,\n면바지, 반팔";
-        } else if (temp >= 28 && temp <= 50) {
+        } else if (temp >= 28 && temp <= 40) {
             return "민소매, 반바지,\n반팔, 원피스";
         } else {
             return "패딩, 두꺼운코트,\n목도리, 기모";
