@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tvDate = findViewById(R.id.tv_date);
         weatherRecyclerView = findViewById(R.id.weatherRecyclerView);
-        Button btn_refresh = findViewById(R.id.btn_refresh);
-        Button btn_calendar = findViewById(R.id.btn_calendar);
+        ImageButton btn_refresh = findViewById(R.id.btn_refresh);
+        ImageButton btn_calendar = findViewById(R.id.btn_calendar);
 
         // 리사이클러 뷰
         weatherRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
