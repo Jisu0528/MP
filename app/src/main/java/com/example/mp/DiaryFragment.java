@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +49,9 @@ public class DiaryFragment extends Fragment {
     private TextView tv_sky;
     private TextView tv_temperate;
     private TextView tv_rain;
+    private String sky;
+    private String temperature;
+    private String rainType;
 
     public interface OnSaveClickListener {
         void onSaveClick();
@@ -168,11 +172,11 @@ public class DiaryFragment extends Fragment {
             return;
         }
 
-        diaryDAO.open();
+        String nx = "55";
+        String ny = "127";
+        setWeather(nx, ny, selectedDate);
 
-        String temperature = "온도"; // 적절한 값을 설정
-        String rainType = "강수형태"; // 적절한 값을 설정
-        String sky = "하늘상태"; // 적절한 값을 설정
+        diaryDAO.open();
 
         Diary diary = new Diary(selectedDate, content, imagePath, temperature, rainType, sky);
         diaryDAO.insertEntry(diary);
@@ -201,8 +205,9 @@ public class DiaryFragment extends Fragment {
     }
 
     private void setWeather(String nx, String ny, String selectedDate) {
-        String timeH = "14";
-        String timeM = "00";
+        Calendar cal = Calendar.getInstance();
+        String timeH = new SimpleDateFormat("HH", Locale.getDefault()).format(cal.getTime());
+        String timeM = new SimpleDateFormat("mm", Locale.getDefault()).format(cal.getTime());
 
         Call<Weather> call = ApiObject.retrofitService.GetWeather(60, 1, "JSON", selectedDate, getBaseTime(timeH, timeM), nx, ny);
 
@@ -230,12 +235,16 @@ public class DiaryFragment extends Fragment {
                         }
                     }
 
+                    sky = getSky(weatherModel.getSky());
+                    temperature = weatherModel.getTemp();
+                    rainType = getRainType(weatherModel.getRainType());
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tv_temperate.setText(weatherModel.getTemp()+ "°C");
-                            tv_rain.setText(getRainType(weatherModel.getRainType()));
-                            tv_sky.setText(getSky(weatherModel.getSky()));
+                            tv_temperate.setText(temperature + "°C");
+                            tv_rain.setText(rainType);
+                            tv_sky.setText(sky);
                         }
                     });
                 }
