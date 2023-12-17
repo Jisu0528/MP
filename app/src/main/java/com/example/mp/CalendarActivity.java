@@ -15,15 +15,6 @@ public class CalendarActivity extends AppCompatActivity implements CalendarFragm
         setContentView(R.layout.activity_calendar);
 
         showCalendarFragment();
-
-//        CalendarView calendarView = findViewById(R.id.calendarView);
-//        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//            @Override
-//            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-//                // 선택된 날짜에 대한 글 작성 프래그먼트를 보여주는 로직 추가
-//                displayDiaryFragment(year, month, dayOfMonth);
-//            }
-//        });
     }
 
     @Override
@@ -57,35 +48,4 @@ public class CalendarActivity extends AppCompatActivity implements CalendarFragm
         fragmentTransaction.commit();
     }
 
-//    private void hideCalendar() {
-//        CalendarFragment calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
-//        if (calendarFragment != null) {
-//            getSupportFragmentManager().beginTransaction().hide(calendarFragment).commit();
-//        }
-//    }
-//
-//    private void displayDiaryFragment(int year, int month, int dayOfMonth) {
-//        // 선택된 날짜 정보를 번들에 담아 프래그먼트에 전달
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("year", year);
-//        bundle.putInt("month", month);
-//        bundle.putInt("dayOfMonth", dayOfMonth);
-//
-//        // 프래그먼트 인스턴스 생성 및 번들 전달
-//        DiaryFragment writeEntryFragment = new DiaryFragment();
-//        writeEntryFragment.setArguments(bundle);
-//
-//        // 프래그먼트를 트랜잭션을 통해 화면에 표시
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_container, writeEntryFragment)
-//                .addToBackStack(null)
-//                .commit();
-//    }
-//
-//    void showCalendar() {
-//        CalendarFragment calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentByTag(CalendarFragment.TAG);
-//        if (calendarFragment != null) {
-//            getSupportFragmentManager().beginTransaction().show(calendarFragment).commit();
-//        }
-//    }
 }

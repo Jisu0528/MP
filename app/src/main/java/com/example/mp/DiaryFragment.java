@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +41,7 @@ public class DiaryFragment extends Fragment {
     private Button btn_album;
     private EditText et_content;
     private Button btn_save;
+    private TextView tv_date;
 
     public interface OnSaveClickListener {
         void onSaveClick();
@@ -66,6 +69,7 @@ public class DiaryFragment extends Fragment {
         btn_album = view.findViewById(R.id.btn_album);
         et_content = view.findViewById(R.id.et_content);
         btn_save = view.findViewById(R.id.btn_save);
+        tv_date = view.findViewById(R.id.tv_date);
 
         // 이미지 선택
         btn_album.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +88,10 @@ public class DiaryFragment extends Fragment {
         });
 
         diaryDAO = new DiaryDAO(getActivity());
+
+        String selectedDate = getArguments().getString("selectedDate");
+        tv_date.setText(formatDate(selectedDate) + " OOTD");
+
 
         return view;
     }
@@ -178,5 +186,17 @@ public class DiaryFragment extends Fragment {
 //        List<Diary> allDiaries = diaryDAO.getAllEntries();
     }
 
+    private String formatDate(String inputDate) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM월 dd일", Locale.getDefault());
+
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return inputDate; // 변환 실패 시 원본 반환
+        }
+    }
 
 }
